@@ -3,7 +3,7 @@ package sdf;
 public class test {
 
 	public static void main(String[] args) {
-<<<<<<< HEAD
+
 		System.out.println(
 				"dooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooood\r\n"
 				+ "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooxxxoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo\r\n"
@@ -208,8 +208,7 @@ public class test {
 				+ "kko'.........lkkkkkkkkkkkkko'........'okkkkkkkkkkkkko'........'okkkkkkkkkkkkkl.........'okkkkkkkkkkkkkko'........'okkkkkkkkkkkkkl.........'okkkkkkkkkkkkkl.........'okkkkkkkkkkkkkl.........'okkkkkkkkkk\r\n"
 				+ "kkd;........;dkkkkkkkkkkkkkd;........;dkkkkkkkkkkkkkd;........;dkkkkkkkkkkkkkd;........;dkkkkkkkkkkkkkkd;........;dkkkkkkkkkkkkkd;........;dkkkkkkkkkkkkkd,........;dkkkkkkkkkkkkko,........:dkkkkkkkkkk\r\n"
 				+ "KKKOxdoooodxOKKKKKKKKKKKKKKKOxdoooodxOKKKKKKKKKKKKKKKOxddooodxOKKKKKKKKKKKKKKKOxdoooodxOKKKKKKKKKKKKKKKKOxdodoodxOKKKKKKKKKKKKKKKOxdoooodxOKKKKKKKKKKKKKKKOxdoooddxOKKKKKKKKKKKKKKKOxdoooodxOKKKKKKKKKKK");
-=======
+
 		System.out.println("하하하하");
->>>>>>> branch 'master' of https://github.com/2022-SMHRD-SW-Fullstack-1/K-Class.git
 	}
 }
