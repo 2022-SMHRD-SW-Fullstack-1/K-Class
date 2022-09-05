@@ -110,12 +110,11 @@ public class movieCon {
 					//값이 같으면 다시 뽑게 ->i번째 숫자를 다시 뽑기
 					i--;
 					break;
-					
 				}
 			}
 			
 		}
-		System.out.println(Arrays.toString(indexList));
+		System.out.println(Arrays.toString(indexList)); //배열 확인용 출력문
 	}
 	
 	
@@ -125,42 +124,37 @@ public class movieCon {
 	//난이도 하(0~15번 인덱스) 랜덤 출제
 	public void lowQ() {
 		indexNum();
-		for(int i=1;i<=5;i++) {
-		play(indexList[i]); //음원 재생
-		System.out.println();//개행
-		System.out.printf("[난이도 하] %d번째 문제!\n",i);
-		System.out.println();//개행
-		System.out.println("[1]정답입력 [2]힌트보기 >>\n(힌트 사용시 획득하는 점수가 줄어들어요)");
-		Ans = sc.nextInt();
-		System.out.println();//개행
+		for(int i=1;i<=5;i++) { //5라운드 반복문
+		play(indexList[i-1]);  		
+		System.out.println(); //개행
 		
-			if(Ans==1) {//정답입력
-				while(cnt<=3) {
-					System.out.println();//개행
-					System.out.print("정답입력 >> ");
-					movieAns = sc.next();
-					if(movieAns.equals(getName(indexList[i]))) {
-						System.out.println("정답입니다!");
-						break;
-						//점수 추가
-					}else {
-						System.out.println("오답입니다! 다시 잘 들어보세요!");
-						cnt++;
-						play(indexList[i]); //음원 다시 재생
-					}	
-				}
-				
-				
-				System.out.println();//개행
-			}if(Ans==2) {//힌트보기
-				System.out.println();//개행
+		System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
+		System.out.printf("[난이도 하] %d번째 문제!\n",i); 
+		System.out.print("[1]정답입력 [2]힌트보기 >> ");
+		Ans = sc.nextInt(); 	
+		
+		if(Ans==1) {//정답입력
+			System.out.println();//개행
+			System.out.print("정답입력 >> ");
+			movieAns = sc.next();
+			
+			if(check(indexList[i-1])) {//정답의 경우
+				System.out.println("정답입니다!");
+				break; //힌트없이 한번에 정답 맞춤 반복문 나가기
+				//스코어 상승
+			}else {//오답의 경우 
 				System.out.println("=====HINT=====");
-				System.out.println(getHint(indexList[i]));
-				break;
-			}
-			}
+				System.out.println(getHint(indexList[i-1]));
+				
+					
+			
+					
+			
 		
-
+		}	
+		}
+		
+		}	
 	}
 	
 	
@@ -171,6 +165,17 @@ public class movieCon {
 	//난이도 상(32~47번 인덱스) 랜덤 출제
 
 	
+	
+	
+	//답 비교하는 메소드
+	public boolean check(int index) {
+		return movieAns.equals(getName(index));
+	}
+
+	//정답 입력 메소드
+	public void saveAns() {
+		movieAns=sc.next();
+	}
 	
 	
 	//힌트 불러오는 메소드
