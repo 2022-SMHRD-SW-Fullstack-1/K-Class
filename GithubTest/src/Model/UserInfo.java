@@ -42,6 +42,7 @@ public class UserInfo {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 
 	public boolean userInsert(String id, String pw, String nick) {
 		try {
