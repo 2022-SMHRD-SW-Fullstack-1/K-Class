@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import Controller.movieCon;
+import Model.ASCII;
 
 public class View {
 
@@ -11,14 +12,14 @@ public class View {
 
 		movieCon mc = new movieCon(); //컨트롤러 연결
 		Scanner sc = new Scanner(System.in);
-		Random rd = new Random();
-		
+		ASCII ascii = new ASCII();
 		
 		int result = 0; //sql성공여부확인 변수
 		
 		
+		//ascii.GameStart();
+		//게임시작 아스키코드 출력 일단 주석처리
 		
-		System.out.println("=======게임 첫실행 아스키코드 노출 창======");
 		//게임 첫 실행시 메인 화면 아스키코드 불러오기(메소드 사용)
 		
 		
@@ -94,8 +95,8 @@ public class View {
 			
 			}else if(menu==4) {//종료
 				System.out.println();//개행
-				System.out.println("프로그램 종료...");
-				//종료 아스키코드 출력(메소드사용)
+				//ascii.GameEnd();
+				//종료 아스키코드 출력(주석처리)
 				sc.close();
 				break;	
 				}
