@@ -14,6 +14,13 @@ public class user {
 		this.nick = nick;
 		this.score = score;
 	}
+	
+	public user(String id, int score) {
+		this.id = id;
+		this.score = score;
+	}
+	
+	
 	public String getId() {
 		return id;
 	}

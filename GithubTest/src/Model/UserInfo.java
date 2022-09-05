@@ -142,21 +142,22 @@ public class UserInfo {
 		ArrayList<user> al = new ArrayList<user>();
 		try {
 			connect();
-			
+
 			String sql = "select id, socre from user order by score desc";
-			
+
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
-			
+
 			while (rs.next()) {
 				String id = rs.getString("id");
 				int score = rs.getInt("score");
 				al.add(new user(id, score));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
 		}
-	} catch (Exception e) {
-		e.printStackTrace();
-	} finally {
-		close();
-	}
 		return al;
+	}
 }
