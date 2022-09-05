@@ -34,6 +34,8 @@ public class MemberDAO { // 회원가입 기능
 			String id = sc.next();
 			System.out.print("비밀번호 : ");
 			String pw = sc.next();
+			System.out.println("닉네임 : ");
+			String nick = sc.next();
 
 			String sql = "insert into student values(?, ?, ?)";
 

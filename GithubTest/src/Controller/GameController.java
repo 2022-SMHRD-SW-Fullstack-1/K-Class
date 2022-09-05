@@ -12,9 +12,9 @@ public class GameController {
 
 	int cnt = 0;
 
-	public int conInsert(String id, String pw, String nick, int age) {
+	public int conInsert(String id, String pw, String nick) {
 		// view가 넘겨준 회원가입에 대한 정보를 DAO로 연결해 주는 메소드
-		cnt = dao.insert(id, pw, nick, age);
+		cnt = dao.insert(id, pw, nick);
 
 		return cnt;
 	}
