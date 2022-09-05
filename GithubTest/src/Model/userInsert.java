@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class MemberDAO { // 회원가입 기능
+public class userInsert { // 회원가입 기능 
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -37,7 +37,7 @@ public class MemberDAO { // 회원가입 기능
 			System.out.println("닉네임 : ");
 			String nick = sc.next();
 
-			String sql = "insert into student values(?, ?, ?)";
+			String sql = "insert into user values(?, ?, ?)";// 저장될 테이블 이름수정하기
 
 			psmt = conn.prepareStatement(sql);
 
