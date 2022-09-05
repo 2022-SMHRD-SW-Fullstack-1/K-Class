@@ -131,21 +131,23 @@ public class movieCon {
 		System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
 		System.out.printf("[난이도 하] %d번째 문제!\n",i); 
 		System.out.print("[1]정답입력 [2]힌트보기 >> ");
-		Ans = sc.nextInt(); 	
-		
+		Ans = sc.nextInt();
+		cnt = 0;
+		while(cnt<3) {
 		if(Ans==1) {//정답입력
 			System.out.println();//개행
 			System.out.print("정답입력 >> ");
 			movieAns = sc.next();
+			cnt++;
 			
 			if(check(indexList[i-1])) {//정답의 경우
 				System.out.println("정답입니다!");
 				break; //힌트없이 한번에 정답 맞춤 반복문 나가기
 				//스코어 상승
-			}else {//오답의 경우 
+			} else {//오답의 경우
 				System.out.println("=====HINT=====");
 				System.out.println(getHint(indexList[i-1]));
-				
+			}
 					
 			
 					
