@@ -47,7 +47,9 @@ public class UserInfo {
 	public boolean userInsert(String id, String pw, String nick) {
 		try {
 			connect();
-			String sql = "insert into user values(?, ?, ?)";// 저장될 테이블 이름수정하기
+			
+		
+			String sql = "insert into member values(?, ?, ?)";// 저장될 테이블 이름수정하기
 
 			psmt = conn.prepareStatement(sql);
 
@@ -71,12 +73,12 @@ public class UserInfo {
 	}
 
 	public boolean login(String id, String pw) {
-		boolean checkL = false;
+		boolean check = false;
 
 		try {
 			connect();
 
-			String sql = "select id, pw from user";
+			String sql = "select id, pw from MEMBER";
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 
@@ -85,7 +87,7 @@ public class UserInfo {
 				String get_pw = rs.getString("pw");
 
 				if (get_id.equals(id) && get_pw.equals(pw)) {
-					checkL = true;
+					check = true;
 				}
 			}
 		} catch (Exception e) {
@@ -93,66 +95,28 @@ public class UserInfo {
 		} finally {
 			close();
 		}
-		return checkL;
+		return check;
 	}
 
-	public void updateScore(int score, String id) {
-		try {
-			connect();
-
-			String sql = "update user set score = ? where id = ?";
-			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, score);
-			psmt.setString(2, id);
-
-			psmt.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-
-	}
-
-	public int getScore(String id) {
-		int score = 0;
-		try {
-			connect();
-
-			String sql = "select id, score from user where id = ?";
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, id);
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				String get_id = rs.getString("id");
-				int get_score = rs.getInt("score");
-
-				if (get_id.equals(id)) {
-					score = get_score;
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-		return score;
-	}
-
+	int n = 1;
 	public ArrayList<user> rank() {
 		ArrayList<user> al = new ArrayList<user>();
 		try {
 			connect();
 
-			String sql = "select id, socre from user order by score desc";
+			String sql = "select * from ranking order by score desc";
 
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
-
+			
+			System.out.println("  닉네임\t점수\t날짜");
 			while (rs.next()) {
-				String id = rs.getString("id");
+				String nick = rs.getString("nick");
 				int score = rs.getInt("score");
-				al.add(new user(id, score));
+//				al.add(new user(nick, score));
+				String date = rs.getString("date");
+				System.out.println(n+". "+nick + "\t" + score + "\t" + date);
+				n++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
