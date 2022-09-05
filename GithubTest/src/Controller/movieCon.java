@@ -81,5 +81,10 @@ public class movieCon {
 		mp3.play(movieList.get(index).getMoviePath());
 
 	}
+	
+	
+	public void musicCorret() {
+	
+	}
 
 }

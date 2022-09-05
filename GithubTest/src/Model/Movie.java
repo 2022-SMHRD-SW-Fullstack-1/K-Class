@@ -16,7 +16,7 @@ public class Movie {
 		return musicPath;
 	}
 
-	public String getostName() {
+	public String getName() {
 		return name;
 	}
 
