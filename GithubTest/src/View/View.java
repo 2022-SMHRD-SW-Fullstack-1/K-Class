@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Controller.movieCon;
 import Model.ASCII;
 import Model.UserInfo;
+import Model.user;
 
 public class View {
 

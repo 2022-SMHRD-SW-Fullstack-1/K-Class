@@ -124,14 +124,13 @@ public class UserInfo {
 		}
 		return al;
 	}
-	public void updateScore(int score, String nick) {
+	public void updateScore(int score) {
 		try {
 			connect();
 			
-			String sql = "update ranking set score = ? where nick =?";
+			String sql = "update ranking set score = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, score);
-			psmt.setString(2, nick);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

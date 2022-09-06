@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import Model.Movie;
 import javazoom.jl.player.MP3Player;
+import Model.UserInfo;
 
 public class movieCon {
 
@@ -141,7 +142,6 @@ public class movieCon {
 						System.out.println("=====HINT=====");
 						System.out.println(getHint(indexList[i - 1]));
 						rscore -= 3;
-						score += rscore;
 						if(cnt==3) {
 							rscore=0;
 						}
@@ -152,11 +152,9 @@ public class movieCon {
 					System.out.println("=====HINT=====");
 					System.out.println(getHint(indexList[i - 1]));
 					rscore -= 2;
-					score += rscore;
 				}
 			}
 			System.out.println(rscore + " / " + score);
-
 		}
 	}
 
@@ -182,7 +180,7 @@ public class movieCon {
 					
 					if (check(indexList[i-1]+ 16)) {// 정답의 경우
 						System.out.println("정답입니다!");
-						score+=rscore;
+						score += rscore;
 						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
 						// 스코어 상승
 					} else {// 오답의 경우
@@ -191,7 +189,6 @@ public class movieCon {
 						System.out.println("=====HINT=====");
 						System.out.println(getHint(indexList[i-1]+ 16));
 						rscore -= 3;
-						score += rscore;
 						if(cnt==3) {
 							rscore=0;
 						}
@@ -202,7 +199,6 @@ public class movieCon {
 					System.out.println("=====HINT=====");
 					System.out.println(getHint(indexList[i-1]+ 16));
 					rscore -= 2;
-					score += rscore;
 				}
 			}
 			System.out.println(rscore + " / " + score);
@@ -241,7 +237,6 @@ public class movieCon {
 						System.out.println("=====HINT=====");
 						System.out.println(getHint(indexList[i - 1]+32));
 						rscore -= 3;
-						score += rscore;
 						if(cnt==3) {
 							rscore=0;
 						}
@@ -252,12 +247,11 @@ public class movieCon {
 					System.out.println("=====HINT=====");
 					System.out.println(getHint(indexList[i - 1]+32));
 					rscore -= 2;
-					score += rscore;
 				}
 			}
 			System.out.println(rscore + " / " + score);
-			
 		}
+		System.out.println(rscore + " / " + score);
 	}
 
 	// 답 비교하는 메소드
@@ -268,6 +262,14 @@ public class movieCon {
 	// 정답 입력 메소드
 	public void saveAns() {
 		movieAns = sc.next();
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 
 	// 힌트 불러오는 메소드
