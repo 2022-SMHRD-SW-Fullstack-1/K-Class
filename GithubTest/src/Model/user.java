@@ -6,6 +6,10 @@ public class user {
 	private String nick;
 	private int score;
 	
+	public user() {
+		
+	}
+	
 	
 	public user(String id, String pw, String nick, int score) {
 		super();

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class UserInfo {
@@ -98,8 +99,8 @@ public class UserInfo {
 		return check;
 	}
 
-	int n = 1;
 	public ArrayList<user> rank() {
+		int n = 1;
 		ArrayList<user> al = new ArrayList<user>();
 		try {
 			connect();
@@ -109,12 +110,11 @@ public class UserInfo {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 			
-			System.out.println("  닉네임\t점수\t날짜");
+			System.out.println("  닉네임\t점수");
 			while (rs.next()) {
 				String nick = rs.getString("nick");
 				int score = rs.getInt("score");
-				String date = rs.getString("date");
-				System.out.println(n+". "+nick + "\t" + score + "\t" + date);
+				System.out.println(n+". "+nick + "\t" + score);
 				n++;
 			}
 		} catch (Exception e) {
@@ -124,13 +124,42 @@ public class UserInfo {
 		}
 		return al;
 	}
-	public void updateScore(int score) {
+	
+	public boolean userScore(String nick, int score) {
 		try {
 			connect();
 			
-			String sql = "update ranking set score = ?";
+		
+			String sql = "insert into ranking values(?, ?)";// 저장될 테이블 이름수정하기
+
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setString(1, nick);
+			psmt.setInt(2, score);
+
+			int result = psmt.executeUpdate();
+
+			if (result > 0) {
+				check = true;
+			} else {
+				check = false;
+			}
+		} catch (Exception e) {
+		} finally {
+			close();
+		}
+		return check;
+	}
+	
+	
+	public void updateScore(int score, String nick) {
+		try {
+			connect();
+			
+			String sql = "update ranking set score = ? where nick = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, score);
+			psmt.setString(2, nick);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

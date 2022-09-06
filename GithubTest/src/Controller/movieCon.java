@@ -8,6 +8,7 @@ import java.util.Scanner;
 import Model.Movie;
 import javazoom.jl.player.MP3Player;
 import Model.UserInfo;
+import Model.user;
 
 public class movieCon {
 
@@ -16,7 +17,9 @@ public class movieCon {
 	ArrayList<Movie> movieList = new ArrayList<>();
 	Random rd = new Random(); // 문제 난이도 구분 랜덤수 생성기
 	MP3Player mp3 = new MP3Player(); // 음원 재생, 정지 기능
-
+	UserInfo userDAO = new UserInfo();
+	user u1 = new user();
+	
 	int[] indexList = new int[5];
 	int index = 0; // movieList 목록 관리
 	int score = 0; // 점수관리
@@ -113,6 +116,7 @@ public class movieCon {
 
 	// 난이도 하(0~15번 인덱스) 랜덤 출제
 	public void lowQ() {
+		score = 0;
 		indexNum();
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
 			play(indexList[i - 1]);
@@ -133,7 +137,7 @@ public class movieCon {
 
 					if (check(indexList[i - 1])) {// 정답의 경우
 						System.out.println("정답입니다!");
-						score+=rscore;
+						score += rscore;
 						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
 						// 스코어 상승
 					} else {// 오답의 경우
@@ -142,8 +146,8 @@ public class movieCon {
 						System.out.println("=====HINT=====");
 						System.out.println(getHint(indexList[i - 1]));
 						rscore -= 3;
-						if(cnt==3) {
-							rscore=0;
+						if (cnt == 3) {
+							rscore = 0;
 						}
 					}
 
@@ -160,11 +164,12 @@ public class movieCon {
 
 	// 난이도 중(16~31번 인덱스) 랜덤 출제
 	public void midQ() {
+		score = 0;
 		indexNum();
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
-			play(indexList[i-1]+ 16);
+			play(indexList[i - 1] + 16);
 			System.out.println(); // 개행
-			System.out.println(Arrays.toString(indexList));//인덱스 확인용 출력
+			System.out.println(Arrays.toString(indexList));// 인덱스 확인용 출력
 			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
 			System.out.printf("[난이도 중] %d번째 문제!\n", i);
 			cnt = 0;
@@ -177,37 +182,38 @@ public class movieCon {
 					System.out.print("정답입력 >> ");
 					movieAns = sc.next();
 					cnt++;
-					
-					if (check(indexList[i-1]+ 16)) {// 정답의 경우
+
+					if (check(indexList[i - 1] + 16)) {// 정답의 경우
 						System.out.println("정답입니다!");
 						score += rscore;
 						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
 						// 스코어 상승
 					} else {// 오답의 경우
-						play(indexList[i-1]+ 16);
+						play(indexList[i - 1] + 16);
 						System.out.println("오답입니다. 다시 들어보세요.");
 						System.out.println("=====HINT=====");
-						System.out.println(getHint(indexList[i-1]+ 16));
+						System.out.println(getHint(indexList[i - 1] + 16));
 						rscore -= 3;
-						if(cnt==3) {
-							rscore=0;
+						if (cnt == 3) {
+							rscore = 0;
 						}
 					}
-					
+
 				} else if (Ans == 2) {
-					play(indexList[i-1]+ 16);
+					play(indexList[i - 1] + 16);
 					System.out.println("=====HINT=====");
-					System.out.println(getHint(indexList[i-1]+ 16));
+					System.out.println(getHint(indexList[i - 1] + 16));
 					rscore -= 2;
 				}
 			}
 			System.out.println(rscore + " / " + score);
-			
+
 		}
 	}
 
 	// 난이도 상(32~47번 인덱스) 랜덤 출제
 	public void highQ() {
+		score =0;
 		indexNum();
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
 			play(indexList[i-1]+32);
@@ -242,15 +248,15 @@ public class movieCon {
 						}
 					}
 					
-				} else if (Ans == 2) {
+			} else if (Ans == 2) {
 					play(indexList[i - 1]+32);
 					System.out.println("=====HINT=====");
 					System.out.println(getHint(indexList[i - 1]+32));
 					rscore -= 2;
 				}
 			}
-			System.out.println(rscore + " / " + score);
 		}
+		
 		System.out.println(rscore + " / " + score);
 	}
 

@@ -68,6 +68,12 @@ public class View {
 
 					if (gameMenu == 1) {// 게임 난이도 하
 						mc.lowQ();
+						int totalScore = mc.getScore();
+						if(mc.getScore()>=0) {
+							userDAO.updateScore(totalScore, userId);
+						}else {
+							userDAO.userScore(userId, totalScore);													
+						}
 					} else if (gameMenu == 2) {// 게임 난이도 중
 						mc.midQ();
 					} else if (gameMenu == 3) {// 게임 난이도 상
