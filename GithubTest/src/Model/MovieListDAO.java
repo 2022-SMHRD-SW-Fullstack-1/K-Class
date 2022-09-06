@@ -43,7 +43,7 @@ public class MovieListDAO {
 		}
 	}
 
-	public ArrayList<MovieList> movieList(String lv) {
+	public ArrayList<MovieList> movieList(int lv) {
 
 		connect();
 
@@ -53,14 +53,14 @@ public class MovieListDAO {
 			String sql = "select * from movie_list where lv = ?";
 
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, lv);//난이도
+			psmt.setInt(1, lv);//난이도
 			
 			rs = psmt.executeQuery();
 
 			while (rs.next()) {
-				String name = rs.getString("name");
+				String name = rs.getString("title_id");
 				String hint = rs.getString("hint");
-				String grade = rs.getString("lv");
+				int grade = rs.getInt("lv");
 				
 				ml.add(new MovieList(name,hint,grade));
 			}

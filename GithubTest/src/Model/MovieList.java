@@ -3,9 +3,9 @@ package Model;
 public class MovieList {
 	private String name;
 	private String hint;
-	private String lv;
+	private int lv;
 	
-	public MovieList(String name, String hint, String lv) {
+	public MovieList(String name, String hint, int lv) {
 		this.name=name;
 		this.hint=hint;
 		this.lv=lv;
@@ -20,7 +20,7 @@ public class MovieList {
 		return hint;
 	}
 
-	public String getGrade() {
+	public int getLv() {
 		return lv;
 	}
 	
