@@ -179,7 +179,7 @@ public class movieCon {
 			System.out.println(rscore + " / " + score);
 		}
 		if(DAO.Scoreget(userNick)==0) {
-			DAO.insertScore(userNick, rscore);
+			DAO.insertScore(userNick, score);
 		}else {
 			//업데이트
 			DAO.updateScore(score,userNick);
@@ -195,8 +195,13 @@ public class movieCon {
 
 	// 난이도 중(16~31번 인덱스) 랜덤 출제
 	public void midQ() {
-		score = 0;
+		if(DAO.Scoreget(userNick)==0) {//기존 점수가 없는 유저
+			score = 0;
+		}else { //기존 점수가 있는 유저
+			score = DAO.Scoreget(userNick);
+		}
 		indexNum();
+		
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
 			play(indexList[i - 1] + 16);
 			System.out.println(); // 개행
@@ -239,13 +244,22 @@ public class movieCon {
 				}
 			}
 			System.out.println(rscore + " / " + score);
-
+			if(DAO.Scoreget(userNick)==0) {
+				DAO.insertScore(userNick, score);
+			}else {
+				//업데이트
+				DAO.updateScore(score,userNick);
+			}
 		}
 	}
 
 	// 난이도 상(32~47번 인덱스) 랜덤 출제
 	public void highQ() {
-		score = 0;
+		if(DAO.Scoreget(userNick)==0) {//기존 점수가 없는 유저
+			score = 0;
+		}else { //기존 점수가 있는 유저
+			score = DAO.Scoreget(userNick);
+		}
 		indexNum();
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
 			play(indexList[i - 1] + 32);
@@ -292,6 +306,12 @@ public class movieCon {
 		}
 
 		System.out.println(rscore + " / " + score);
+		if(DAO.Scoreget(userNick)==0) {
+			DAO.insertScore(userNick, score);
+		}else {
+			//업데이트
+			DAO.updateScore(score,userNick);
+		}
 	}
 
 	
