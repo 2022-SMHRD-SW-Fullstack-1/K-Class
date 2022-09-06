@@ -9,25 +9,21 @@ import Model.Movie;
 import javazoom.jl.player.MP3Player;
 
 public class movieCon {
-	
-	Scanner sc = new Scanner (System.in);
-	Movie movie = new Movie(null,null,null); //movie 초기화 객체생성
+
+	Scanner sc = new Scanner(System.in);
+	Movie movie = new Movie(null, null, null); // movie 초기화 객체생성
 	ArrayList<Movie> movieList = new ArrayList<>();
-	Random rd = new Random(); //문제 난이도 구분 랜덤수 생성기
+	Random rd = new Random(); // 문제 난이도 구분 랜덤수 생성기
 	MP3Player mp3 = new MP3Player(); // 음원 재생, 정지 기능
-	
-	
+
 	int[] indexList = new int[5];
 	int index = 0; // movieList 목록 관리
-	int score = 0; //점수관리
-	int cnt = 0; //오답 카운팅
-	int Ans = 0; //사용자 선택지 저장
-	String movieAns = "";//사용자 영화 답안 저장
-	
-	
-	
-	
-	
+	int score = 0; // 점수관리
+	int rscore = 0;// 라운드별 점수
+	int cnt = 0; // 오답 카운팅
+	int Ans = 0; // 사용자 선택지 저장
+	String movieAns = "";// 사용자 영화 답안 저장
+
 	public movieCon() {
 		// 하
 		movieList.add(new Movie("겨울왕국", "하/겨울왕국.mp3", "얼음마법을 쓰는 여왕"));
@@ -85,8 +81,7 @@ public class movieCon {
 
 	}
 
-	
-	//노래재생메소드
+	// 노래재생메소드
 	public void play(int index) {
 		// 노래 재생을 위한 메소드
 		// 호출 시 musicList에 있는 노래를 play
@@ -96,102 +91,196 @@ public class movieCon {
 		}
 		mp3.play(movieList.get(index).getMoviePath());
 	}
-	
-	
-	//인덱스 랜덤 출력
+
+	// 인덱스 랜덤 출력
 	public void indexNum() {
-		for(int i=0;i<indexList.length;i++) {
-			//뽑을때부터 중복이 안되게
-			indexList[i] =rd.nextInt(16)+1;
-			
-			//이전에 뽑은 랜덤 값 지금 뽑은 랜덤 값 일치하는지 확인하는 반복문
-			for(int j=0;j<i;j++) {
-				if(indexList[i]==indexList[j]) {
-					//값이 같으면 다시 뽑게 ->i번째 숫자를 다시 뽑기
+		for (int i = 0; i < indexList.length; i++) {
+			// 뽑을때부터 중복이 안되게
+			indexList[i] = rd.nextInt(16) + 1;
+
+			// 이전에 뽑은 랜덤 값 지금 뽑은 랜덤 값 일치하는지 확인하는 반복문
+			for (int j = 0; j < i; j++) {
+				if (indexList[i] == indexList[j]) {
+					// 값이 같으면 다시 뽑게 ->i번째 숫자를 다시 뽑기
 					i--;
 					break;
 				}
 			}
-			
+
 		}
-		System.out.println(Arrays.toString(indexList)); //배열 확인용 출력문
+		System.out.println(Arrays.toString(indexList)); // 배열 확인용 출력문
 	}
-	
-	
-	
-	
-	
-	//난이도 하(0~15번 인덱스) 랜덤 출제
+
+	// 난이도 하(0~15번 인덱스) 랜덤 출제
 	public void lowQ() {
 		indexNum();
-		for(int i=1;i<=5;i++) { //5라운드 반복문
-		play(indexList[i-1]);  		
-		System.out.println(); //개행
-		
-		System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
-		System.out.printf("[난이도 하] %d번째 문제!\n",i); 
-		System.out.print("[1]정답입력 [2]힌트보기 >> ");
-		Ans = sc.nextInt();
-		cnt = 0;
-		while(cnt<3) {
-		if(Ans==1) {//정답입력
-			System.out.println();//개행
-			System.out.print("정답입력 >> ");
-			movieAns = sc.next();
-			cnt++;
-			
-			if(check(indexList[i-1])) {//정답의 경우
-				System.out.println("정답입니다!");
-				break; //힌트없이 한번에 정답 맞춤 반복문 나가기
-				//스코어 상승
-			} else {//오답의 경우
-				System.out.println("=====HINT=====");
-				System.out.println(getHint(indexList[i-1]));
+		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
+			play(indexList[i - 1]);
+			System.out.println(); // 개행
+
+			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
+			System.out.printf("[난이도 하] %d번째 문제!\n", i);
+			cnt = 0;
+			rscore = 16;
+			while (cnt < 3) {
+				System.out.print("[1]정답입력 [2]힌트보기 >> ");
+				Ans = sc.nextInt();
+				if (Ans == 1) {// 정답입력
+					System.out.println();// 개행
+					System.out.print("정답입력 >> ");
+					movieAns = sc.next();
+					cnt++;
+
+					if (check(indexList[i - 1])) {// 정답의 경우
+						System.out.println("정답입니다!");
+						score+=rscore;
+						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
+						// 스코어 상승
+					} else {// 오답의 경우
+						play(indexList[i - 1]);
+						System.out.println("오답입니다. 다시 들어보세요.");
+						System.out.println("=====HINT=====");
+						System.out.println(getHint(indexList[i - 1]));
+						rscore -= 3;
+						score += rscore;
+						if(cnt==3) {
+							rscore=0;
+						}
+					}
+
+				} else if (Ans == 2) {
+					play(indexList[i - 1]);
+					System.out.println("=====HINT=====");
+					System.out.println(getHint(indexList[i - 1]));
+					rscore -= 2;
+					score += rscore;
+				}
 			}
-					
-			
-					
-			
-		
-		}	
+			System.out.println(rscore + " / " + score);
+
 		}
-		
-		}	
 	}
-	
-	
-	//난이도 중(16~31번 인덱스) 랜덤 출제
 
-	
-	
-	//난이도 상(32~47번 인덱스) 랜덤 출제
+	// 난이도 중(16~31번 인덱스) 랜덤 출제
+	public void midQ() {
+		indexNum();
+		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
+			play(indexList[i - 1]);
+			System.out.println(); // 개행
+			
+			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
+			System.out.printf("[난이도 하] %d번째 문제!\n", i);
+			cnt = 0;
+			rscore = 16;
+			while (cnt < 3) {
+				System.out.print("[1]정답입력 [2]힌트보기 >> ");
+				Ans = sc.nextInt();
+				if (Ans == 1) {// 정답입력
+					System.out.println();// 개행
+					System.out.print("정답입력 >> ");
+					movieAns = sc.next();
+					cnt++;
+					
+					if (check(indexList[i - 1])) {// 정답의 경우
+						System.out.println("정답입니다!");
+						score+=rscore;
+						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
+						// 스코어 상승
+					} else {// 오답의 경우
+						play(indexList[i - 1]);
+						System.out.println("오답입니다. 다시 들어보세요.");
+						System.out.println("=====HINT=====");
+						System.out.println(getHint(indexList[i - 1]));
+						rscore -= 3;
+						score += rscore;
+						if(cnt==3) {
+							rscore=0;
+						}
+					}
+					
+				} else if (Ans == 2) {
+					play(indexList[i - 1]);
+					System.out.println("=====HINT=====");
+					System.out.println(getHint(indexList[i - 1]));
+					rscore -= 2;
+					score += rscore;
+				}
+			}
+			System.out.println(rscore + " / " + score);
+			
+		}
+	}
 
-	
-	
-	
-	//답 비교하는 메소드
+	// 난이도 상(32~47번 인덱스) 랜덤 출제
+	public void highQ() {
+		indexNum();
+		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
+			play(indexList[i - 1]);
+			System.out.println(); // 개행
+			
+			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
+			System.out.printf("[난이도 하] %d번째 문제!\n", i);
+			cnt = 0;
+			rscore = 16;
+			while (cnt < 3) {
+				System.out.print("[1]정답입력 [2]힌트보기 >> ");
+				Ans = sc.nextInt();
+				if (Ans == 1) {// 정답입력
+					System.out.println();// 개행
+					System.out.print("정답입력 >> ");
+					movieAns = sc.next();
+					cnt++;
+					
+					if (check(indexList[i - 1])) {// 정답의 경우
+						System.out.println("정답입니다!");
+						score+=rscore;
+						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
+						// 스코어 상승
+					} else {// 오답의 경우
+						play(indexList[i - 1]);
+						System.out.println("오답입니다. 다시 들어보세요.");
+						System.out.println("=====HINT=====");
+						System.out.println(getHint(indexList[i - 1]));
+						rscore -= 3;
+						score += rscore;
+						if(cnt==3) {
+							rscore=0;
+						}
+					}
+					
+				} else if (Ans == 2) {
+					play(indexList[i - 1]);
+					System.out.println("=====HINT=====");
+					System.out.println(getHint(indexList[i - 1]));
+					rscore -= 2;
+					score += rscore;
+				}
+			}
+			System.out.println(rscore + " / " + score);
+			
+		}
+	}
+
+	// 답 비교하는 메소드
 	public boolean check(int index) {
 		return movieAns.equals(getName(index));
 	}
 
-	//정답 입력 메소드
+	// 정답 입력 메소드
 	public void saveAns() {
-		movieAns=sc.next();
+		movieAns = sc.next();
 	}
-	
-	
-	//힌트 불러오는 메소드
+
+	// 힌트 불러오는 메소드
 	public String getHint(int index) {
 		String Hint = movieList.get(index).getHint();
 		return Hint;
 	}
-	
-	
-	//영화 이름 불러오는 메소드
+
+	// 영화 이름 불러오는 메소드
 	public String getName(int index) {
 		String Ans = movieList.get(index).getName();
 		return Ans;
 	}
-	
 
 }

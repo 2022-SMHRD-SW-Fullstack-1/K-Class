@@ -68,7 +68,7 @@ public class View {
 					if (gameMenu == 1) {// 게임 난이도 하
 						mc.lowQ();
 					} else if (gameMenu == 2) {// 게임 난이도 중
-
+						
 					} else if (gameMenu == 3) {// 게임 난이도 상
 
 					} else {
