@@ -68,9 +68,9 @@ public class View {
 					if (gameMenu == 1) {// 게임 난이도 하
 						mc.lowQ();
 					} else if (gameMenu == 2) {// 게임 난이도 중
-						
+						mc.midQ();
 					} else if (gameMenu == 3) {// 게임 난이도 상
-
+						mc.highQ();
 					} else {
 						System.out.println("번호를 다시 입력하세요");
 					}

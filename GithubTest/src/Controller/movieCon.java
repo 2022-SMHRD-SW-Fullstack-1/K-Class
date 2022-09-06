@@ -53,7 +53,7 @@ public class movieCon {
 		movieList.add(new Movie("범죄와의전쟁", "중/범죄와의전쟁.mp3", "최민식, 하정우"));
 		movieList.add(new Movie("비긴어게인", "중/비긴어게인.mp3", "아름다운 음악영화"));
 		movieList.add(new Movie("신세계", "중/신세계.mp3", "드루와"));
-		movieList.add(new Movie("엽기적인그녀", "중/엽기적인그녀.mp3", "전치현, 차태현"));
+		movieList.add(new Movie("엽기적인그녀", "중/엽기적인그녀.mp3", "전지현, 차태현"));
 		movieList.add(new Movie("어벤져스", "중/어벤져스.mp3", "마블의 히어로물"));
 		movieList.add(new Movie("올드보이", "중/올드보이.mp3", "군만두가 질릴것 같아"));
 		movieList.add(new Movie("좋은놈나쁜놈이상한놈", "중/좋은놈나쁜놈이상한놈.mp3", "각자 목적인 있는 3인방"));
@@ -96,7 +96,7 @@ public class movieCon {
 	public void indexNum() {
 		for (int i = 0; i < indexList.length; i++) {
 			// 뽑을때부터 중복이 안되게
-			indexList[i] = rd.nextInt(16) + 1;
+			indexList[i] = rd.nextInt(15) + 1;
 
 			// 이전에 뽑은 랜덤 값 지금 뽑은 랜덤 값 일치하는지 확인하는 반복문
 			for (int j = 0; j < i; j++) {
@@ -108,7 +108,6 @@ public class movieCon {
 			}
 
 		}
-		System.out.println(Arrays.toString(indexList)); // 배열 확인용 출력문
 	}
 
 	// 난이도 하(0~15번 인덱스) 랜덤 출제
@@ -165,13 +164,13 @@ public class movieCon {
 	public void midQ() {
 		indexNum();
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
-			play(indexList[i - 1]);
+			play(indexList[i-1]+ 16);
 			System.out.println(); // 개행
-			
+			System.out.println(Arrays.toString(indexList));//인덱스 확인용 출력
 			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
-			System.out.printf("[난이도 하] %d번째 문제!\n", i);
+			System.out.printf("[난이도 중] %d번째 문제!\n", i);
 			cnt = 0;
-			rscore = 16;
+			rscore = 18;
 			while (cnt < 3) {
 				System.out.print("[1]정답입력 [2]힌트보기 >> ");
 				Ans = sc.nextInt();
@@ -181,16 +180,16 @@ public class movieCon {
 					movieAns = sc.next();
 					cnt++;
 					
-					if (check(indexList[i - 1])) {// 정답의 경우
+					if (check(indexList[i-1]+ 16)) {// 정답의 경우
 						System.out.println("정답입니다!");
 						score+=rscore;
 						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
 						// 스코어 상승
 					} else {// 오답의 경우
-						play(indexList[i - 1]);
+						play(indexList[i-1]+ 16);
 						System.out.println("오답입니다. 다시 들어보세요.");
 						System.out.println("=====HINT=====");
-						System.out.println(getHint(indexList[i - 1]));
+						System.out.println(getHint(indexList[i-1]+ 16));
 						rscore -= 3;
 						score += rscore;
 						if(cnt==3) {
@@ -199,9 +198,9 @@ public class movieCon {
 					}
 					
 				} else if (Ans == 2) {
-					play(indexList[i - 1]);
+					play(indexList[i-1]+ 16);
 					System.out.println("=====HINT=====");
-					System.out.println(getHint(indexList[i - 1]));
+					System.out.println(getHint(indexList[i-1]+ 16));
 					rscore -= 2;
 					score += rscore;
 				}
@@ -215,13 +214,13 @@ public class movieCon {
 	public void highQ() {
 		indexNum();
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
-			play(indexList[i - 1]);
+			play(indexList[i-1]+32);
 			System.out.println(); // 개행
-			
+			System.out.println(Arrays.toString(indexList));//인덱스 확인용 출력
 			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
-			System.out.printf("[난이도 하] %d번째 문제!\n", i);
+			System.out.printf("[난이도 상] %d번째 문제!\n", i);
 			cnt = 0;
-			rscore = 16;
+			rscore = 20;
 			while (cnt < 3) {
 				System.out.print("[1]정답입력 [2]힌트보기 >> ");
 				Ans = sc.nextInt();
@@ -231,16 +230,16 @@ public class movieCon {
 					movieAns = sc.next();
 					cnt++;
 					
-					if (check(indexList[i - 1])) {// 정답의 경우
+					if (check(indexList[i - 1]+32)) {// 정답의 경우
 						System.out.println("정답입니다!");
 						score+=rscore;
 						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
 						// 스코어 상승
 					} else {// 오답의 경우
-						play(indexList[i - 1]);
+						play(indexList[i - 1]+32);
 						System.out.println("오답입니다. 다시 들어보세요.");
 						System.out.println("=====HINT=====");
-						System.out.println(getHint(indexList[i - 1]));
+						System.out.println(getHint(indexList[i - 1]+32));
 						rscore -= 3;
 						score += rscore;
 						if(cnt==3) {
@@ -249,9 +248,9 @@ public class movieCon {
 					}
 					
 				} else if (Ans == 2) {
-					play(indexList[i - 1]);
+					play(indexList[i - 1]+32);
 					System.out.println("=====HINT=====");
-					System.out.println(getHint(indexList[i - 1]));
+					System.out.println(getHint(indexList[i - 1]+32));
 					rscore -= 2;
 					score += rscore;
 				}
