@@ -127,7 +127,6 @@ public class movieCon {
 
 	// 난이도 하(0~15번 인덱스) 랜덤 출제
 	public void lowQ() {
-		System.out.println(userNick);
 		if(DAO.Scoreget(userNick)==0) {//기존 점수가 없는 유저
 			score = 0;
 		}else { //기존 점수가 있는 유저
@@ -139,8 +138,9 @@ public class movieCon {
 			play(indexList[i - 1]);
 			System.out.println(); // 개행
 			System.out.println(Arrays.toString(indexList));// 인덱스 확인용 출력
-			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
 			System.out.printf("[난이도 하] %d번째 문제!\n", i);
+			System.out.println("잘 듣고 생각나는 영화를 입력하세요!");
+			System.out.println();//개행
 			cnt = 0;
 			rscore = 16;
 			while (cnt < 3) {
@@ -195,19 +195,19 @@ public class movieCon {
 
 	// 난이도 중(16~31번 인덱스) 랜덤 출제
 	public void midQ() {
+		indexNum();
 		if(DAO.Scoreget(userNick)==0) {//기존 점수가 없는 유저
 			score = 0;
 		}else { //기존 점수가 있는 유저
 			score = DAO.Scoreget(userNick);
 		}
-		indexNum();
-		
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
 			play(indexList[i - 1] + 16);
 			System.out.println(); // 개행
 			System.out.println(Arrays.toString(indexList));// 인덱스 확인용 출력
-			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
 			System.out.printf("[난이도 중] %d번째 문제!\n", i);
+			System.out.println("잘 듣고 생각나는 영화를 입력하세요!");
+			System.out.println();//개행
 			cnt = 0;
 			rscore = 18;
 			while (cnt < 3) {
@@ -255,18 +255,19 @@ public class movieCon {
 
 	// 난이도 상(32~47번 인덱스) 랜덤 출제
 	public void highQ() {
+		indexNum();
 		if(DAO.Scoreget(userNick)==0) {//기존 점수가 없는 유저
 			score = 0;
 		}else { //기존 점수가 있는 유저
 			score = DAO.Scoreget(userNick);
 		}
-		indexNum();
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
 			play(indexList[i - 1] + 32);
 			System.out.println(); // 개행
 			System.out.println(Arrays.toString(indexList));// 인덱스 확인용 출력
-			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
 			System.out.printf("[난이도 상] %d번째 문제!\n", i);
+			System.out.println("잘 듣고 생각나는 영화를 입력하세요!");
+			System.out.println();//개행
 			cnt = 0;
 			rscore = 20;
 			while (cnt < 3) {
