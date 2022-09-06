@@ -50,7 +50,7 @@ public class MovieListDAO {
 		ArrayList<MovieList> ml = new ArrayList<MovieList>();
 
 		try {
-			String sql = "select * from movie_list where grade = ?";
+			String sql = "select * from movie_list where lv = ?";
 
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, lv);//난이도
@@ -59,16 +59,14 @@ public class MovieListDAO {
 
 			while (rs.next()) {
 				String name = rs.getString("name");
-				String hint1 = rs.getString("hint1");
-				String hint2 = rs.getString("hint2");
-				String hint3 = rs.getString("hint3");
-				String grade = rs.getString("grade");
+				String hint = rs.getString("hint");
+				String grade = rs.getString("lv");
 				
-				ml.add(new MovieList(name,hint1,hint2,hint3,grade));
+				ml.add(new MovieList(name,hint,grade));
 			}
 
 		} catch (Exception e) {
-			System.out.println("중복된 아이디이거나 잘못된 형식입니다.");
+			e.printStackTrace();
 		} finally {
 			close();
 		}
