@@ -113,7 +113,6 @@ public class UserInfo {
 			while (rs.next()) {
 				String nick = rs.getString("nick");
 				int score = rs.getInt("score");
-//				al.add(new user(nick, score));
 				String date = rs.getString("date");
 				System.out.println(n+". "+nick + "\t" + score + "\t" + date);
 				n++;
@@ -125,4 +124,20 @@ public class UserInfo {
 		}
 		return al;
 	}
+	public void updateScore(int score, String nick) {
+		try {
+			connect();
+			
+			String sql = "update ranking set score = ? where nick =?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, score);
+			psmt.setString(2, nick);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+	}
+
+	
 }
