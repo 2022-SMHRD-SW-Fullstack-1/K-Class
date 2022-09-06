@@ -74,7 +74,7 @@ public class View {
 					System.out.println();//개행
 					System.out.println("1. 힌트는 한 문제당 1개 제공됩니다!");
 					System.out.println("2. 첫 기회에 힌트 사용시 획득 점수가 감소합니다");
-					System.out.println("3. 오답의 경우 총 3번의 기회가 주어집니다");
+					System.out.println("3. 총 3번의 기회가 주어집니다");
 					System.out.println("4. 높은 난이도 문제일 수록 획득하는 점수가 높아집니다");
 					System.out.println();//개행
 					System.out.println("==============난이도를 선택하세요!=============");
@@ -83,11 +83,11 @@ public class View {
 					System.out.println("===========================================");
 
 					if (gameMenu == 1) {// 게임 난이도 하
-						mc.lowQ();
+						mc.lowQ(16,0);
 					} else if (gameMenu == 2) {// 게임 난이도 중
-						mc.midQ();
+						mc.lowQ(18, 16);
 					} else if (gameMenu == 3) {// 게임 난이도 상
-						mc.highQ();
+						mc.lowQ(20, 32);
 					} else {
 						System.out.println("번호를 다시 입력하세요");
 					}

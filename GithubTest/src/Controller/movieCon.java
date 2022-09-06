@@ -125,8 +125,13 @@ public class movieCon {
 		}
 	}
 
+	
+	
+	
+	
+	
 	// 난이도 하(0~15번 인덱스) 랜덤 출제
-	public void lowQ() {
+	public void lowQ(int maxscore,int index) {
 		if(DAO.Scoreget(userNick)==0) {//기존 점수가 없는 유저
 			score = 0;
 		}else { //기존 점수가 있는 유저
@@ -134,49 +139,22 @@ public class movieCon {
 		}
 		
 		indexNum();
-		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
-			play(indexList[i - 1]);
+		for (int i = 1; i <= 5; i++) {
+			play(indexList[i - 1]+index);
 			System.out.println(); // 개행
-			System.out.println(Arrays.toString(indexList));// 인덱스 확인용 출력
-			System.out.printf("[난이도 하] %d번째 문제!\n", i);
-			System.out.println("잘 듣고 생각나는 영화를 입력하세요!");
+			System.out.printf("	     [난이도 하] %d번째 문제!\n", i);
+			System.out.println("	잘 듣고 생각나는 영화를 입력하세요!");
 			System.out.println();//개행
 			cnt = 0;
-			rscore = 16;
-			while (cnt < 3) {
-				System.out.print("[1]정답입력 [2]힌트보기 >> ");
-				Ans = sc.nextInt();
-				if (Ans == 1) {// 정답입력
-					System.out.println();// 개행
-					System.out.print("정답입력 >> ");
-					movieAns = sc.next();
-					cnt++;
-
-					if (check(indexList[i - 1])) {// 정답의 경우
-						System.out.println("정답입니다!");
-						score += rscore; // 스코어 상승
-						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
-					} else {// 오답의 경우
-						play(indexList[i - 1]);
-						System.out.println("오답입니다. 다시 들어보세요.");
-						System.out.println("=====HINT=====");
-						System.out.println(getHint(indexList[i - 1]));
-						rscore -= 3;
-						if (cnt == 3) {
-							System.out.println("기회를 소진하여 다음 문제로 넘어갑니다!");
-							System.out.println("이번 문제의 정답은 [" + getName(indexList[i-1]) + "]");
-							rscore = 0;
-						}
-					}
-
-				} else if (Ans == 2) {
-					play(indexList[i - 1]);
-					System.out.println("=====HINT=====");
-					System.out.println(getHint(indexList[i - 1]));
-					rscore -= 2;
-				}
+			rscore = maxscore; //16
+			System.out.print("	[1]정답입력 [2]힌트보기 >> ");
+			Ans = sc.nextInt();
+			if(Ans==1) {
+				makeQ( i+index);
+			}else
+			{
+				hint(i+index);
 			}
-			System.out.println(rscore + " / " + score);
 		}
 		if(DAO.Scoreget(userNick)==0) {
 			DAO.insertScore(userNick, score);
@@ -185,8 +163,12 @@ public class movieCon {
 			DAO.updateScore(score,userNick);
 		}
 		
-		System.out.printf("%s 님의 이번 라운드 점수 : %d \n",userNick, score);
-		System.out.printf("%s 님의 총 점수 : %d",userNick,DAO.Scoreget(userNick));
+		System.out.println("===================게임종료==================");
+		if (mp3.isPlaying()) { // 실행되는 노래가 있다면 멈추가 다시 재생
+			mp3.stop();
+		}
+		System.out.printf("    %s 님의 총 점수 : %d \n",userNick,DAO.Scoreget(userNick));
+		System.out.println("===========================================");
 		System.out.println();//개행
 		
 		
@@ -204,7 +186,6 @@ public class movieCon {
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
 			play(indexList[i - 1] + 16);
 			System.out.println(); // 개행
-			System.out.println(Arrays.toString(indexList));// 인덱스 확인용 출력
 			System.out.printf("[난이도 중] %d번째 문제!\n", i);
 			System.out.println("잘 듣고 생각나는 영화를 입력하세요!");
 			System.out.println();//개행
@@ -264,7 +245,6 @@ public class movieCon {
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
 			play(indexList[i - 1] + 32);
 			System.out.println(); // 개행
-			System.out.println(Arrays.toString(indexList));// 인덱스 확인용 출력
 			System.out.printf("[난이도 상] %d번째 문제!\n", i);
 			System.out.println("잘 듣고 생각나는 영화를 입력하세요!");
 			System.out.println();//개행
@@ -335,4 +315,55 @@ public class movieCon {
 		return Ans;
 	}
 
+	
+	//문제출제 메소드
+	public void makeQ(int i) {
+			while (cnt < 3) {
+					System.out.println();// 개행
+					System.out.print("	정답입력 >> ");
+					movieAns = sc.next();
+					cnt++;
+
+					if (check(indexList[i - 1])) {// 정답의 경우
+						System.out.println("	정답입니다!");
+						score += rscore; // 스코어 상승
+						System.out.println(rscore);
+						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
+					} else {// 오답의 경우
+						play(indexList[i - 1]);
+						System.out.println();//개행
+						System.out.println("	오답입니다. 다시 들어보세요.");
+						System.out.println();
+						rscore -= 3;
+						if(cnt<2&&Ans==1) {
+							System.out.println("====================HINT===================");
+							System.out.println("	   "+getHint(indexList[i - 1]));
+							System.out.println("===========================================");
+						}
+						if (cnt == 3) {
+							System.out.println();
+							System.out.println("	기회를 소진하여 다음 문제로 넘어갑니다!");
+							System.out.println("	이번 문제의 정답은 [" + getName(indexList[i-1]) + "]");
+							System.out.println("===========================================");
+							rscore = 0;
+						}
+					}
+				} 
+			}
+		
+	
+	//힌트 골랐을 경우 메소드
+	public void hint( int i) {
+			play(indexList[i - 1]);
+			System.out.println("====================HINT===================");
+			System.out.println("	   "+getHint(indexList[i - 1]));
+			System.out.println("===========================================");
+			rscore -= 2;
+			makeQ(i);
+	}
+		
+	
+
+	
+	
 }
