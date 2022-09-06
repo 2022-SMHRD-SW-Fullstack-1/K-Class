@@ -1,12 +1,12 @@
 package Model;
 
-public class MovieList {
+public class MovieListDTO {
 	private String name;
 	private String hint;
 	private int lv;
 	private String moviepath;
 	
-	public MovieList(String name, String hint, int lv, String moviepath) {
+	public MovieListDTO(String name, String hint, int lv, String moviepath) {
 		this.name=name;
 		this.hint=hint;
 		this.lv=lv;

@@ -43,11 +43,11 @@ public class MovieListDAO {
 		}
 	}
 
-	public ArrayList<MovieList> movieList(int lv) {
+	public ArrayList<MovieListDTO> movieList(int lv) {
 
 		connect();
 
-		ArrayList<MovieList> ml = new ArrayList<MovieList>();
+		ArrayList<MovieListDTO> ml = new ArrayList<MovieListDTO>();
 
 		try {
 			String sql = "select * from movie_list where lv = ?";
@@ -63,7 +63,7 @@ public class MovieListDAO {
 				int grade = rs.getInt("lv");
 				String moviepath = rs.getString("moviepath");
 				
-				ml.add(new MovieList(name,hint,grade,moviepath));
+				ml.add(new MovieListDTO(name,hint,grade,moviepath));
 			}
 
 		} catch (Exception e) {
