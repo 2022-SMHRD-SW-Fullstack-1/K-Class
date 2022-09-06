@@ -10,14 +10,15 @@ import Model.MovieListDAO;
 import javazoom.jl.player.MP3Player;
 
 public class movieController {
+	static MP3Player mp3 = new MP3Player();
 
 	public static void mlist(int lv) {
 		Scanner sc = new Scanner(System.in);
 		MemberDAO Member = new MemberDAO();
 		MovieListDAO Movie = new MovieListDAO();
-		MP3Player mp3 = new MP3Player();
 
 		ArrayList<MovieList> ml = Movie.movieList(lv);
+		
 		int score = 0;
 		
 		Collections.shuffle(ml);
@@ -25,6 +26,7 @@ public class movieController {
 		for (int i = 0; i < 5; i++) {
 			System.out.println(ml.get(i).getName());
 			System.out.println(ml.get(i).getLv());
+			mp3.play(ml.get(i).getmoviepath());
 			int rscore = 16;
 			int cnt = 0;
 			
@@ -62,5 +64,11 @@ public class movieController {
 //		int totalScore = Member.Scoreget(nick);
 //		Member.updateScore(totalScore, nick);
 		System.out.println(score+"점 입니다.");
+	}
+	
+	public void play(int index) {// 노래 재생을 위한 메소드
+		if (mp3.isPlaying()) { // 실행되는 노래가 있다면 멈추가 다시 재생
+			mp3.stop();
+		}
 	}
 }

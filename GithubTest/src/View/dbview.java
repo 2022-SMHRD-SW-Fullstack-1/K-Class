@@ -7,7 +7,7 @@ public class dbview {
 	public static void main(String[] args) {
 		movieController mc = new movieController();
 		
-		mc.mlist(2);
+		mc.mlist(1);
 
 
 	}

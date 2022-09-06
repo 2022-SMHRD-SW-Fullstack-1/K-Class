@@ -61,8 +61,9 @@ public class MovieListDAO {
 				String name = rs.getString("title_id");
 				String hint = rs.getString("hint");
 				int grade = rs.getInt("lv");
+				String moviepath = rs.getString("moviepath");
 				
-				ml.add(new MovieList(name,hint,grade));
+				ml.add(new MovieList(name,hint,grade,moviepath));
 			}
 
 		} catch (Exception e) {
