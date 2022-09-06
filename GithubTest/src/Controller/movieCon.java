@@ -7,8 +7,8 @@ import java.util.Scanner;
 
 import Model.Movie;
 import javazoom.jl.player.MP3Player;
-import Model.UserInfo;
-import Model.user;
+import Model.MemberDAO;
+import Model.MemberDTO;
 
 public class movieCon {
 
@@ -17,16 +17,17 @@ public class movieCon {
 	ArrayList<Movie> movieList = new ArrayList<>();
 	Random rd = new Random(); // 문제 난이도 구분 랜덤수 생성기
 	MP3Player mp3 = new MP3Player(); // 음원 재생, 정지 기능
-	UserInfo userDAO = new UserInfo();
-	user u1 = new user();
-	
+	MemberDAO DAO = new MemberDAO();
+	MemberDTO DTO = new MemberDTO();
+
 	int[] indexList = new int[5];
 	int index = 0; // movieList 목록 관리
 	int score = 0; // 점수관리
 	int rscore = 0;// 라운드별 점수
 	int cnt = 0; // 오답 카운팅
 	int Ans = 0; // 사용자 선택지 저장
-	String movieAns = "";// 사용자 영화 답안 저장
+	String movieAns = null;// 사용자 영화 답안 저장
+	String userNick = null; // 현재 사용자 닉네임 저장
 
 	public movieCon() {
 		// 하
@@ -85,6 +86,17 @@ public class movieCon {
 
 	}
 
+	
+	
+	// 로그인 후 닉네임 출력 메소드
+	public String conLogin(String id, String pw) {
+
+		userNick = DAO.login(id, pw);
+		;
+		return userNick;
+
+	}
+
 	// 노래재생메소드
 	public void play(int index) {
 		// 노래 재생을 위한 메소드
@@ -110,18 +122,23 @@ public class movieCon {
 					break;
 				}
 			}
-
 		}
 	}
 
 	// 난이도 하(0~15번 인덱스) 랜덤 출제
 	public void lowQ() {
-		score = 0;
+		System.out.println(userNick);
+		if(DAO.Scoreget(userNick)==0) {//기존 점수가 없는 유저
+			score = 0;
+		}else { //기존 점수가 있는 유저
+			score = DAO.Scoreget(userNick);
+		}
+		
 		indexNum();
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
 			play(indexList[i - 1]);
 			System.out.println(); // 개행
-
+			System.out.println(Arrays.toString(indexList));// 인덱스 확인용 출력
 			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
 			System.out.printf("[난이도 하] %d번째 문제!\n", i);
 			cnt = 0;
@@ -137,9 +154,8 @@ public class movieCon {
 
 					if (check(indexList[i - 1])) {// 정답의 경우
 						System.out.println("정답입니다!");
-						score += rscore;
+						score += rscore; // 스코어 상승
 						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
-						// 스코어 상승
 					} else {// 오답의 경우
 						play(indexList[i - 1]);
 						System.out.println("오답입니다. 다시 들어보세요.");
@@ -147,6 +163,8 @@ public class movieCon {
 						System.out.println(getHint(indexList[i - 1]));
 						rscore -= 3;
 						if (cnt == 3) {
+							System.out.println("기회를 소진하여 다음 문제로 넘어갑니다!");
+							System.out.println("이번 문제의 정답은 [" + getName(indexList[i-1]) + "]");
 							rscore = 0;
 						}
 					}
@@ -160,7 +178,20 @@ public class movieCon {
 			}
 			System.out.println(rscore + " / " + score);
 		}
-	}
+		if(DAO.Scoreget(userNick)==0) {
+			DAO.insertScore(userNick, rscore);
+		}else {
+			//업데이트
+			DAO.updateScore(score,userNick);
+		}
+		
+		System.out.printf("%s 님의 이번 라운드 점수 : %d \n",userNick, score);
+		System.out.printf("%s 님의 총 점수 : %d",userNick,DAO.Scoreget(userNick));
+		System.out.println();//개행
+		
+		
+	}	
+									
 
 	// 난이도 중(16~31번 인덱스) 랜덤 출제
 	public void midQ() {
@@ -185,9 +216,8 @@ public class movieCon {
 
 					if (check(indexList[i - 1] + 16)) {// 정답의 경우
 						System.out.println("정답입니다!");
-						score += rscore;
+						score += rscore; // 스코어 상승
 						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
-						// 스코어 상승
 					} else {// 오답의 경우
 						play(indexList[i - 1] + 16);
 						System.out.println("오답입니다. 다시 들어보세요.");
@@ -195,6 +225,8 @@ public class movieCon {
 						System.out.println(getHint(indexList[i - 1] + 16));
 						rscore -= 3;
 						if (cnt == 3) {
+							System.out.println("기회를 소진하여 다음 문제로 넘어갑니다!");
+							System.out.println("이번 문제의 정답은 [" + getName(indexList[i-1]+16) + "]");
 							rscore = 0;
 						}
 					}
@@ -213,12 +245,12 @@ public class movieCon {
 
 	// 난이도 상(32~47번 인덱스) 랜덤 출제
 	public void highQ() {
-		score =0;
+		score = 0;
 		indexNum();
 		for (int i = 1; i <= 5; i++) { // 5라운드 반복문
-			play(indexList[i-1]+32);
+			play(indexList[i - 1] + 32);
 			System.out.println(); // 개행
-			System.out.println(Arrays.toString(indexList));//인덱스 확인용 출력
+			System.out.println(Arrays.toString(indexList));// 인덱스 확인용 출력
 			System.out.println("힌트는 한문제당 한번만 사용 가능하며 사용시 획득하는 점수가 줄어듭니다!");
 			System.out.printf("[난이도 상] %d번째 문제!\n", i);
 			cnt = 0;
@@ -231,53 +263,45 @@ public class movieCon {
 					System.out.print("정답입력 >> ");
 					movieAns = sc.next();
 					cnt++;
-					
-					if (check(indexList[i - 1]+32)) {// 정답의 경우
+
+					if (check(indexList[i - 1] + 32)) {// 정답의 경우
 						System.out.println("정답입니다!");
-						score+=rscore;
+						score += rscore;
 						break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
 						// 스코어 상승
 					} else {// 오답의 경우
-						play(indexList[i - 1]+32);
+						play(indexList[i - 1] + 32);
 						System.out.println("오답입니다. 다시 들어보세요.");
 						System.out.println("=====HINT=====");
-						System.out.println(getHint(indexList[i - 1]+32));
+						System.out.println(getHint(indexList[i - 1] + 32));
 						rscore -= 3;
-						if(cnt==3) {
-							rscore=0;
+						if (cnt == 3) {
+							System.out.println("기회를 소진하여 다음 문제로 넘어갑니다!");
+							System.out.println("이번 문제의 정답은 [" + getName(indexList[i-1]+32) + "]");
+							rscore = 0;
 						}
 					}
-					
-			} else if (Ans == 2) {
-					play(indexList[i - 1]+32);
+
+				} else if (Ans == 2) {
+					play(indexList[i - 1] + 32);
 					System.out.println("=====HINT=====");
-					System.out.println(getHint(indexList[i - 1]+32));
+					System.out.println(getHint(indexList[i - 1] + 32));
 					rscore -= 2;
 				}
 			}
 		}
-		
+
 		System.out.println(rscore + " / " + score);
 	}
 
+	
+	
 	// 답 비교하는 메소드
 	public boolean check(int index) {
 		return movieAns.equals(getName(index));
 	}
 
-	// 정답 입력 메소드
-	public void saveAns() {
-		movieAns = sc.next();
-	}
-
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
-	}
-
+	
 	// 힌트 불러오는 메소드
 	public String getHint(int index) {
 		String Hint = movieList.get(index).getHint();

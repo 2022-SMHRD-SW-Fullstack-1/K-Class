@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 import Controller.movieCon;
 import Model.ASCII;
-import Model.UserInfo;
-import Model.user;
+import Model.MemberDAO;
+import Model.MemberDTO;
 
 public class View {
 
@@ -14,7 +14,7 @@ public class View {
 		movieCon mc = new movieCon(); // 컨트롤러 연결
 		Scanner sc = new Scanner(System.in);
 		ASCII ascii = new ASCII();
-		UserInfo userDAO = new UserInfo();
+		MemberDAO userDAO = new MemberDAO();
 
 		int result = 0; // sql성공여부확인 변수
 
@@ -59,21 +59,19 @@ public class View {
 				System.out.print("비밀번호를 입력하세요 >> ");
 				String userPw = sc.next();
 				
-				boolean check = userDAO.login(userId, userPw);
+				String userNick = mc.conLogin(userId, userPw);
 				
-				if (check) { // 로그인 성공시
-					System.out.println(userId+"님 접속을 환영합니다!"); // 닉네임 동시 출력
+				
+				if (userNick!=null) { // 로그인 성공시
+					System.out.println(userNick+"님 접속을 환영합니다!"); // 닉네임 동시 출력
+					System.out.println();//개행
 					System.out.print("난이도를 선택하세요 [1]하 [2]중 [3]상 >> ");
 					int gameMenu = sc.nextInt();// 사용자 난이도 선택
 
 					if (gameMenu == 1) {// 게임 난이도 하
+						System.out.println(userDAO.Scoreget(userNick));
+						
 						mc.lowQ();
-						int totalScore = mc.getScore();
-						if(mc.getScore()>=0) {
-							userDAO.updateScore(totalScore, userId);
-						}else {
-							userDAO.userScore(userId, totalScore);													
-						}
 					} else if (gameMenu == 2) {// 게임 난이도 중
 						mc.midQ();
 					} else if (gameMenu == 3) {// 게임 난이도 상
@@ -83,6 +81,7 @@ public class View {
 					}
 
 				} else { // 로그인 실패시
+					System.out.println();//개행
 					System.out.println("로그인 정보를 다시 확인하세요");
 
 				}
@@ -108,9 +107,5 @@ public class View {
 
 	}
 
-	private static void login(String userId, String userPw) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

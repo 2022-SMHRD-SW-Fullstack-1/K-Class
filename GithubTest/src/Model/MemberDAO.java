@@ -8,13 +8,17 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class UserInfo {
+public class MemberDAO {
 	Connection conn = null;
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
+	int cnt = 0;
 	boolean check = false;
+	int score = 0;
+	
 
-	public void connect() {
+
+	public void connect() { //DB연결 메소드
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 
@@ -28,7 +32,7 @@ public class UserInfo {
 		}
 	}
 
-	public void close() {
+	public void close() { //DB닫는 메소드
 		try {
 			if (rs != null) {
 				rs.close();
@@ -45,7 +49,8 @@ public class UserInfo {
 		}
 	}
 
-	public boolean userInsert(String id, String pw, String nick) {
+	//회원가입 DB 연결
+	public boolean userInsert(String id, String pw, String nick) { 
 		try {
 			connect();
 			
@@ -73,35 +78,62 @@ public class UserInfo {
 		return check;
 	}
 
-	public boolean login(String id, String pw) {
-		boolean check = false;
+	//로그인정보 DB확인
+	public String login(String id, String pw) {
+		String userNick = null;
 
 		try {
 			connect();
 
-			String sql = "select id, pw from MEMBER";
+			String sql = "select nick from member where id=? and pw=?";
 			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1,id);
+			psmt.setString(2,pw);
+			
 			rs = psmt.executeQuery();
-
-			while (rs.next()) {
-				String get_id = rs.getString("id");
-				String get_pw = rs.getString("pw");
-
-				if (get_id.equals(id) && get_pw.equals(pw)) {
-					check = true;
-				}
+			
+			if(rs.next()) {
+				userNick = rs.getString(1);
 			}
+			
 		} catch (Exception e) {
-			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return check;
+		return userNick;
 	}
+	
+	//로그인정보 스코어 가져오기
+		public int Scoreget(String nick) {
+			int score = 0;
 
-	public ArrayList<user> rank() {
+			try {
+				connect();
+
+				String sql = "select score from ranking where nick=?";
+				psmt = conn.prepareStatement(sql);
+				
+				psmt.setString(1,nick);
+				
+				rs = psmt.executeQuery();
+				
+				if(rs.next()) {
+					score = rs.getInt("score");
+				}
+				
+			} catch (Exception e) {
+			} finally {
+				close();
+			}
+			return score;
+		}
+	
+
+	//랭킹 DB에 저장
+	public ArrayList<MemberDTO> rank() {
 		int n = 1;
-		ArrayList<user> al = new ArrayList<user>();
+		ArrayList<MemberDTO> al = new ArrayList<MemberDTO>();
 		try {
 			connect();
 
@@ -125,7 +157,9 @@ public class UserInfo {
 		return al;
 	}
 	
-	public boolean userScore(String nick, int score) {
+	
+	//첫 점수 생성
+	public boolean insertScore(String nick, int score) {
 		try {
 			connect();
 			
@@ -151,7 +185,7 @@ public class UserInfo {
 		return check;
 	}
 	
-	
+	//점수 업데이트 메소드
 	public void updateScore(int score, String nick) {
 		try {
 			connect();
@@ -160,6 +194,10 @@ public class UserInfo {
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, score);
 			psmt.setString(2, nick);
+			
+			psmt.executeUpdate(sql);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -167,5 +205,31 @@ public class UserInfo {
 		}
 	}
 
+	//점수 가져오는 메소드
+	public int getuserScore(String nick) {
+		try {
+			connect();
+			
+			String sql = "select score from ranking where nick=?";
+			
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, nick);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				score = rs.getInt("score");
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return score;
+	}
+	
 	
 }

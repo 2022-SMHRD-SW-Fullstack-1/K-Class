@@ -1,28 +1,24 @@
 package Model;
 
-public class user {
+public class MemberDTO {
 	private String id;
 	private String pw;
 	private String nick;
 	private int score;
 	
-	public user() {
+	MemberDAO DAO = new MemberDAO();
+	
+	public MemberDTO() {
 		
 	}
 	
-	
-	public user(String id, String pw, String nick, int score) {
-		super();
+	public MemberDTO(String id, String pw, String nick, int score) {
 		this.id = id;
 		this.pw = pw;
 		this.nick = nick;
 		this.score = score;
 	}
 	
-	public user(String id, int score) {
-		this.id = id;
-		this.score = score;
-	}
 	
 	
 	public String getId() {
@@ -49,5 +45,8 @@ public class user {
 	public void setScore(int score) {
 		this.score = score;
 	}
+
+
+		
 
 }
