@@ -192,10 +192,12 @@ public class MemberDAO {
 			
 			String sql = "update ranking set score = ? where nick = ?";
 			psmt = conn.prepareStatement(sql);
+			
+			
 			psmt.setInt(1, score);
 			psmt.setString(2, nick);
 			
-			psmt.executeUpdate(sql);
+			psmt.executeUpdate();
 			
 			
 		} catch (Exception e) {
