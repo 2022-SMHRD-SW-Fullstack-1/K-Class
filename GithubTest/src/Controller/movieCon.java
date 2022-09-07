@@ -145,7 +145,6 @@ public class movieCon {
 			if (check(i)) {// 정답의 경우 인덱스 0부터 4까지 상승
 				System.out.println("	정답입니다!");
 				score += rscore; // 스코어 상승
-				System.out.println(score + " / " + rscore);
 				break; // 힌트없이 한번에 정답 맞춤 반복문 나가기
 			} else {// 오답의 경우
 				playDB(i);// 인덱스 0부터 4까지 상승
