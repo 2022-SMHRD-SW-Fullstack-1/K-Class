@@ -1,26 +1,22 @@
 package Model;
 
-public class Movie {
+public class BgmMusic {
 
 	private String name;
 	private String musicPath; // 음악 파일의 경로를 저장하는 필드
-	private String hint;
+	
 
-	public Movie(String name, String musicPath, String hint) {
+	public BgmMusic(String name, String musicPath) {
 		this.name = name;
 		this.musicPath = musicPath;
-		this.hint = hint;
-	}
-
-	public String getMoviePath() {
-		return musicPath;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public String getHint() {
-		return hint;
+	public String getMusicPath() {
+		return musicPath;
 	}
+
 }

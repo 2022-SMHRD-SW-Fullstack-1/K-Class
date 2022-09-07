@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
-import Model.Movie;
+import Model.BgmMusic;
 import Model.MovieListDAO;
 import Model.MovieListDTO;
 import javazoom.jl.player.MP3Player;
@@ -16,7 +16,6 @@ import Model.MemberDTO;
 public class movieCon {
 
 	Scanner sc = new Scanner(System.in);
-	Movie movie = new Movie(null, null, null); // movie 초기화 객체생성
 	MovieListDAO mvDAO = new MovieListDAO();
 
 	ArrayList<MovieListDTO> movieList = new ArrayList<>();
@@ -33,7 +32,25 @@ public class movieCon {
 	int Ans = 0; // 사용자 선택지 저장
 	String movieAns = null;// 사용자 영화 답안 저장
 	String userNick = null; // 현재 사용자 닉네임 저장
-
+	ArrayList<BgmMusic> bgmList = new ArrayList<>();
+	
+	
+	
+	//배경음악 저장
+	public void bgmMusic() {
+		bgmList.add(new BgmMusic("게임시작","기타/게임시작.mp3"));
+		
+	}
+	
+	//배경음악 재생
+	public void playBgm(int index) {
+		bgmMusic();
+		if(mp3.isPlaying()) {
+		mp3.stop();
+		}
+		mp3.play(bgmList.get(index).getMusicPath());
+	}
+		
 
 	
 	// 로그인 후 닉네임 출력 메소드

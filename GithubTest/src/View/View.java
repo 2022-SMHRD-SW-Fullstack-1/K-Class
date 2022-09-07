@@ -18,10 +18,10 @@ public class View {
 
 		int result = 0; // sql성공여부확인 변수
 
-		// ascii.GameStart();
-		// 게임시작 아스키코드 출력 일단 주석처리
+		// 게임시작 아스키코드
+		ascii.GameStart();
+		mc.playBgm(0);
 
-		// 게임 첫 실행시 메인 화면 아스키코드 불러오기(메소드 사용)
 
 		while (true) {
 			System.out.println();// 개행
@@ -107,8 +107,8 @@ public class View {
 
 			} else if (menu == 4) {// 종료
 				System.out.println();// 개행
-				// ascii.GameEnd();
-				// 종료 아스키코드 출력(주석처리)
+				// 종료 아스키코드 출력
+				ascii.GameEnd();
 				sc.close();
 				break;
 			} else {
