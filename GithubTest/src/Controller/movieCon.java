@@ -57,7 +57,9 @@ public class movieCon {
 		return userNick;
 
 	}
-
+	
+	
+	
 	// DB랜덤 재생목록 생성
 	public void makeList(int lv) { // 레벨 입력 1-하 2-중 3-상
 		movieList = mvDAO.movieList(lv); // 난이도별 노래 목록 생성 명령어
@@ -162,7 +164,6 @@ public class movieCon {
 					System.out.println("	이번 문제의 정답은 [" + movieList.get(i).getName() + "]");
 					System.out.println("===========================================");
 					rscore = 0;
-					System.out.println(score + " / " + rscore);
 				}
 			}
 		}

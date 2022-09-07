@@ -20,8 +20,9 @@ public class View {
 
 		// 게임시작 아스키코드
 		ascii.GameStart();
+		
+		//게임시작 배경음
 		mc.playBgm(0);
-
 
 		while (true) {
 			System.out.println();// 개행
