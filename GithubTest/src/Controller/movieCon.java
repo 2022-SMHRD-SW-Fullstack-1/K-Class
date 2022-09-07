@@ -36,13 +36,18 @@ public class movieCon {
 
 	// 배경음악 저장
 	public void bgmMusic() {
-		bgmList.add(new BgmMusic("게임시작", "기타/게임시작.mp3"));
+		bgmList.add(new BgmMusic("게임시작", "기타/게임시작.mp3"));}
+	
+	//종료음악 저장
+		public void endMusic() {
+			bgmList.add(new BgmMusic("게임종료", "기타/게임종료.mp3"));
 
 	}
 
 	// 배경음악 재생
 	public void playBgm(int index) {
 		bgmMusic();
+		endMusic();
 		if (mp3.isPlaying()) {
 			mp3.stop();
 		}

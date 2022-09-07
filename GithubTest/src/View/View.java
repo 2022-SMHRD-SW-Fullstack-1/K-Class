@@ -108,6 +108,8 @@ public class View {
 
 			} else if (menu == 4) {// 종료
 				System.out.println();// 개행
+				//게임종료 배경음
+				mc.playBgm(1);
 				// 종료 아스키코드 출력
 				ascii.GameEnd();
 				sc.close();
