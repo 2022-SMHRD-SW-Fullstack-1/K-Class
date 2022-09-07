@@ -62,30 +62,18 @@ public class movieCon {
 	}
 	
 	
-//	// 노래재생메소드
-//	public void play(int index) {
-//		// 노래 재생을 위한 메소드
-//		// 호출 시 musicList에 있는 노래를 play
-//
-//		if (mp3.isPlaying()) { // 실행되는 노래가 있다면 멈추가 다시 재생
-//			mp3.stop();
-//		}
-//		mp3.play(movieList.get(index).getMoviePath());
-//	}
-
 	
 	
 	
 	
-	
-	// 난이도 하(0~15번 인덱스) 랜덤 출제
+	// 문제 출제 level -난이도("하","중","상" / lv 1-하 2-중 3-상 / maxscore 16-하 18-중 20-상)
 	public void makeQuiz(String level,int lv,int maxscore) {
 		if(DAO.Scoreget(userNick)==0) {//기존 점수가 없는 유저
 			score = 0;
 		}else { //기존 점수가 있는 유저
 			score = DAO.Scoreget(userNick);
 		}
-		makeList(lv); //1-난이도 하
+		makeList(lv); 
 		
 		for (int i = 1; i <= 5; i++) {
 			playDB(i); //인덱스 0부터 4까지 상승
