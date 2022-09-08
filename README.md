@@ -6,9 +6,12 @@
 ![흐름도](https://user-images.githubusercontent.com/112370791/189012564-dc905c30-dd35-47b2-91f3-e8cabb8dd642.PNG)
 ![유스케이스](https://user-images.githubusercontent.com/112370791/189012601-3e93bb22-cee1-4696-b102-cff6569299cb.PNG)
 
-# 프로젝트 구현
+# 프로젝트 개발도구 및 사용언어
+![image](https://user-images.githubusercontent.com/112370791/189014828-cb8a81ee-d1e3-47d4-aa35-479abdbe8121.png)
+
 # 프로젝트 실행
 https://user-images.githubusercontent.com/112370791/189014400-d3c56e63-dfbb-41b3-be93-e400032de30f.mp4
+
 # 프로젝트 일정
 일정|상세내용
 ---|---|
