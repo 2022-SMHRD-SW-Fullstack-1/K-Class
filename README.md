@@ -1,5 +1,5 @@
 # 프로젝트 소개
-![시작메뉴](https://user-images.githubusercontent.com/112370791/189012488-11d2e4bd-4a30-4325-9268-4643b038f14f.PNG)
+![image](https://user-images.githubusercontent.com/112370791/189016665-6fba71dc-bbaa-47ab-bb65-4dafed51ec60.png)
 ![소개](https://user-images.githubusercontent.com/112370791/189012528-9c79877c-cb6b-45b5-96a1-02ba228db65b.PNG)
 
 # 프로젝트 설계
