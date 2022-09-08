@@ -19,7 +19,7 @@ https://user-images.githubusercontent.com/112370791/189014400-d3c56e63-dfbb-41b3
 9/6|MVC 구축 및 JDBC 연결,수정
 9/7|최종검토 및 오류수정
 
-#팀원 역할
+# 팀원 역할
 이름|역할
 ---|---|
 강윤찬|MVC 설계 및 오류확인
